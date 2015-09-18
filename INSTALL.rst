@@ -7,13 +7,154 @@ Installation
 This document specifies how to install a development version of CDS for the
 first time. Production grade deployment is not covered here.
 
-2. Prerequisites
-----------------
+2. Docker
+---------
+
+Please only use for development and testing.
+
+The docker container is based on the Invenio docker container.
+
+For more information please check `Read the Docs (Invenio / Docker) <http://invenio.readthedocs.org/en/latest/developers/docker.html>`_.
+
+2.1 Prerequisites
+-----------------
+Please install `docker <https://docs.docker.com/installation/ubuntulinux/>`_
+and docker-compose:
+
+.. code-block:: console
+
+    # Install docker
+    sudo apt-get install curl
+    curl -sSL https://get.docker.com/ | sh
+
+    # Use docker without sudo
+    sudo usermod -aG docker *your_user*
+
+    # Verify docker is installed correctly.
+    docker run hello-world
+
+    # Install docker-compose
+    sudo pip install docker-compose
+
+
+2.2 OS X prerequisites
+~~~~~~~~~~~~~~~~~~~~~~
+Install docker for OS X.
+
+https://docs.docker.com/installation/mac/
+
+Hints:
+
+- Change the port binding in `docker-compose.yml` the docker-machine IP-Address.
+- Change the CFG_SITE_URL.
+
+2.2 Quick start
+---------------
+2.2.1 Getting the source code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First go to GitHub and fork the CDS repositories if you have
+not already done so (see Step 1 in
+`Fork a Repo <https://help.github.com/articles/fork-a-repo>`_):
+
+- `CDS <https://github.com/CERNDocumentServer/cds>`_
+
+Next, clone your forks to get the development versions of CDS.
+
+.. code-block:: console
+
+    $ cd $HOME/src/
+    $ git clone https://github.com/<username>/cds.git
+    $ cd $HOME/src/cds
+    $ git checkout -b cdslabs cds/cdslabs
+
+
+
+2.2.2 Optional - Using a different invenio version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using Invenio form your own source repository also activates live reloading
+of changed Python files.
+
+So you might want to use git-new-workdir to create a separate *invenio_cdslabs*
+folder.
+
+In the cds/docker-compose.yml file under the *web* container
+change the mapped volumes to match you local source path:
+
+Uncomment the 3 lines and change the path corresponding to you installation.
+
+.. code-block:: yml
+
+    volumes:
+        # - ../invenio_cdslabs/invenio:/code/invenio:ro
+        # - ../invenio_cdslabs/docs:/code/docs:rw
+        # - ../invenio_cdslabs/scripts:/code/scripts:ro
+        - ./cds:/code-cds/cds
+        - /home/invenio
+
+
+
+2.3 Build and run the Docker image
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To build the cdslabs image go to the cds source folder and execute:
+
+.. code-block:: console
+
+    docker-compose build
+
+Run cdslabs with:
+
+.. code-block:: console
+
+    docker-compose up
+
+Load the demo records (Optinal):
+
+.. code-block:: console
+
+    docker-compose run --rm web inveniomanage records create -t marcxml < cds/demosite/data/cds-demobibdata.xml
+
+
+Remove the containers:
+
+.. code-block:: console
+
+    docker-compose rm -v
+
+
+2.4 Develop
+-----------
+For development on the cds overlay is the cds/cds folder directly mapped
+into the container.
+
+Changes in Python files will be automatically detected and trigger a reload.
+
+If other file are changed the container has to be recreated.
+
+.. code-block:: console
+
+    docker-compose build
+    docker-compose up
+
+
+To everything including the database:
+
+.. code-block:: console
+
+    docker-compose rm -v
+    docker-compose build
+    docker-compose up
+
+
+3. Virtual enviroment
+-------------
+3.1 Prerequisites
+-----------------
 
 If you haven't done it already, follow the section "2. Prerequisites" in
 `First Steps with Invenio <http://invenio.readthedocs.org/en/latest/getting-started/first-steps.html#prerequisites>`_
 
-2.2 OS X prerequisites
+3.1.1 OS X prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~
 
 For OS X it is recommended to install dependencies via Homebrew.
@@ -33,7 +174,7 @@ Next install dependencies via Homebrew:
    $ npm install -g less@1.7.5 clean-css requirejs uglify-js bower
    $ pip install virtualenv virtualenv-wrapper
 
-2.3 MySQL configuration (Needs review)
+3.1.2 MySQL configuration (Needs review)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default MySQL configuration needs to be modified otherwise the database
@@ -63,10 +204,10 @@ See http://stackoverflow.com/a/22773887 and
 http://docs.basho.com/riak/latest/ops/tuning/open-files-limit/#Mac-OS-X for how
 to persist the change.
 
-3. Quick start
+3.2. Quick start
 --------------
 
-3.1. Getting the source code
+3.2.1. Getting the source code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First go to GitHub and fork both Invenio and CDS repositories if you have
@@ -98,7 +239,7 @@ updates to the repository.
     $ git remote add cds https://github.com/CERNDocumentServer/cds.git
     $ git fetch cds
 
-3.2 Working environment
+3.2.2 Working environment
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 We recommend to work using
@@ -131,7 +272,7 @@ By default we checkout the development branches `cdslabs` for CDS and
 
 TODO: Finish docs!
 
-3.3 Installation
+3.2.3 Installation
 ~~~~~~~~~~~~~~~~
 
 The steps for installing CDS are nearly identical to a normal Invenio
@@ -169,7 +310,7 @@ code according to our code quality standards:
     (cdslabs)$ cd $HOME/src/cds/
     (cdslabs)$ kwalitee githooks install
 
-3.4. Configuration
+3.2.4. Configuration
 ~~~~~~~~~~~~~~~~~~
 
 Generate the secret key for your installation.
@@ -201,7 +342,7 @@ the debug mode could be usefull:
 
     (cdslabs)$ inveniomanage config set DEBUG True
 
-3.5. Assets
+3.2.5. Assets
 ~~~~~~~~~~~
 
 Assets in non-development mode may be combined and minified using various
@@ -243,7 +384,7 @@ assets using the once that have been copied to the static folder.
     (cdslabs)$ inveniomanage collect
     (cdslabs)$ inveniomanage assets build
 
-3.6. Initial data
+3.2.6. Initial data
 ~~~~~~~~~~~~~~~~~
 
 **Troubleshooting:** As a developer, you may want to use the provided
@@ -318,7 +459,7 @@ And you may now open your favourite web browser on
 `http://0.0.0.0:4000/ <http://0.0.0.0:4000/>`_
 
 
-4. Updating existing installation
+3.3. Updating existing installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First step update both Invenio and CDS repositories inside the virtualenv:
@@ -360,7 +501,7 @@ And it could be that the database schema has change:
     (cdslabs)$ inveniomanage upgrader run
 
 
-5. Fetching pull requests
+4. Fetching pull requests
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: console

@@ -18,13 +18,24 @@
  */
 
 require([
-	"jquery",
-	"js/app",
-    "js/record_tools"],
-function($, app, main) {
-	$(document).ready(function() {
-		main.modalList();
-		main.expandContent();
-		main.translationListener();
-	});
+    "jquery",
+    "js/app",
+    "js/record_tools",
+  ],
+  function($, app, record_tools) {
+
+    $(document).ready(function() {
+      record_tools.modalList();
+      record_tools.expandContent();
+      record_tools.translationListener();
+
+      // Search bar remove collection tag
+      var $searchForm = $('#cds-main-search');
+      var $searchInput = $('#cds-main-search-input');
+      $('.cds-remove-search-to-collection').on('click', function(ev) {
+        ev.preventDefault();
+        $searchForm.find('[name=cc]').val('');
+        $(this).parent().fadeOut('slow').remove();
+      });
+    });
 });

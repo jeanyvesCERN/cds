@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# This file is part of Invenio.
+# This file is part of Invenio
 # Copyright (C) 2015 CERN.
 #
 # Invenio is free software; you can redistribute it and/or
@@ -14,5 +14,25 @@
 # General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Invenio; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+# along with Invenio; if not, write to the Free Software Foundation,
+# Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+"""Test cds package."""
+
+from __future__ import absolute_import
+from flask import url_for
+from invenio.testsuite import InvenioTestCase, make_test_suite, run_test_suite
+
+
+class TestCDSAPIEndpoint(InvenioTestCase):
+
+    """Test CDS."""
+
+    def test_test(self):
+        assert True
+
+
+TEST_SUITE = make_test_suite(TestCDSAPIEndpoint)
+
+if __name__ == "__main__":
+    run_test_suite(TEST_SUITE)

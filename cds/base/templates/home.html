@@ -1,6 +1,6 @@
 {#
 # This file is part of Invenio.
-# Copyright (C) 2014 CERN.
+# Copyright (C) 2014, 2015 CERN.
 #
 # Invenio is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -17,40 +17,38 @@
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 #}
 
-{% extends "search/index_base.html" %}
+{% extends "page.html" %}
 
 {%- block global_bundles -%}
   {{- super() -}}
-  {%- bundle "cds.js" -%}
+  {%- bundle "personal-collections.js" -%}
 {%- endblock -%}
 
-{%- block index -%}
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div id="grid" data-guest="{{ current_user.is_guest | lower}}">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="personal-grid-error-message"></div>
-            </div>
+{%- block body -%}
+  <div class="row">
+    <div class="col-md-12">
+      <div id="grid" data-guest="{{ current_user.is_guest | lower}}">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="personal-grid-error-message"></div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="text-right">
-                <div class="personal-grid-loader">
-                  <i class="fa fa-refresh fa-spin"></i>
-                </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-right">
+              <div class="personal-grid-loader">
+                <i class="fa fa-refresh fa-spin"></i>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div id="personal-grid-handler" class="personal-boxes" ></div>
-          </div>
-          <div class="text-center">
-            {%- if not current_user.is_guest -%}
-            <a href="#" class="btn btn-link personal-boxes-add-more">+</a>
-            {%- endif -%}
-          </div>
+        </div>
+        <div class="row">
+          <div id="personal-grid-handler" class="personal-boxes" ></div>
+        </div>
+        <div class="text-center">
+          {%- if not current_user.is_guest -%}
+          <a href="#" class="btn btn-primary personal-boxes-add-more">+</a>
+          {%- endif -%}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Invenio.
-# Copyright (C) 2014 CERN.
+# Copyright (C) 2014, 2015 CERN.
 #
 # Invenio is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -19,11 +19,18 @@
 
 include requirements*.txt AUTHORS COPYING README.md bower.json setup.cfg
 
+recursive-include cds/base/testsuite *
+
 recursive-include docs *
 recursive-exclude docs/_build *
 
 recursive-include cds/base/static *
 recursive-include cds/base/templates *
+
+recursive-include cds/modules/*/static *
+recursive-include cds/modules/*/templates *
+
+recursive-include cds/base/dojson/testsuite *
 
 recursive-exclude * *.pyc *.pyo
 

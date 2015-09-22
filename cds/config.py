@@ -36,13 +36,13 @@ point specified in the setup.py::
 
 from __future__ import unicode_literals
 
-from invenio.base.config import PACKAGES as _PACKAGES
-from invenio.base.config import PACKAGES_EXCLUDE as _PACKAGES_EXCLUDE
-from invenio_records.config import (
-    RECORD_PROCESSORS as _RECORD_PROCESSORS,
-    RECORD_KEY_ALIASES as _RECORD_KEY_ALIASES
-)
 from collections import MutableSequence
+
+from invenio_base.config import PACKAGES as _PACKAGES
+from invenio_records.config import (
+    RECORD_KEY_ALIASES as _RECORD_KEY_ALIASES,
+    RECORD_PROCESSORS as _RECORD_PROCESSORS
+)
 
 
 def _concat_fields_into_list(*args):
@@ -62,15 +62,8 @@ def _concat_fields_into_list(*args):
 
 PACKAGES = [
     "cds.base",
-    "cds.demosite",
     "cds.modules.personal_collection",
 ] + _PACKAGES
-
-PACKAGES_EXCLUDE = [
-    "invenio.modules.annotations",
-    "invenio.modules.communities",
-    "invenio.modules.pages",
-] + _PACKAGES_EXCLUDE
 
 EXTENSIONS = [
     'invenio.ext.confighacks',
@@ -100,17 +93,17 @@ EXTENSIONS = [
     'invenio.ext.menu',
     'invenio.ext.jasmine',  # after assets
     'flask.ext.breadcrumbs:Breadcrumbs',
-    'invenio.modules.deposit.url_converters',
+    'invenio_deposit.url_converters',
     'invenio.ext.es',
 ]
 
 
 CFG_SITE_NAME = "CERN Document Server"
 CFG_SITE_NAME_INTL = {
-    "en": "CERN Document Server",  # Shouldn't be required.
-    "fr": "CERN Document Server",
-    "de": "CERN Document Server",
-    "it": "CERN Document Server"
+    "en": "CDS",  # Shouldn't be required.
+    "fr": "CDS",
+    "de": "CDS",
+    "it": "CDS"
 }
 
 CFG_SITE_MISSION = "Access articles, reports and multimedia content in HEP"
@@ -136,8 +129,10 @@ RECORD_KEY_ALIASES['title'] = _concat_fields_into_list(
     'edition_statement',
     'abbreviated_title',
     'key_title',
-    'main_entry_meeting_name.meeting_name_or_jurisdiction_name_as_entry_element',
-    'added_entry_meeting_name.meeting_name_or_jurisdiction_name_as_entry_element',
+    'main_entry_meeting_name.'
+    'meeting_name_or_jurisdiction_name_as_entry_element',
+    'added_entry_meeting_name.'
+    'meeting_name_or_jurisdiction_name_as_entry_element',
 )
 RECORD_KEY_ALIASES['author'] = _concat_fields_into_list(
     'main_entry_personal_name',
@@ -146,7 +141,7 @@ RECORD_KEY_ALIASES['author'] = _concat_fields_into_list(
 )
 RECORD_KEY_ALIASES['abstract'] = _concat_fields_into_list(
     'summary',
-   'french_summary_note',
+    'french_summary_note',
 )
 RECORD_KEY_ALIASES['keywords'] = _concat_fields_into_list(
     'index_term_uncontrolled',
@@ -161,7 +156,7 @@ RECORD_KEY_ALIASES['reportnumber'] = _concat_fields_into_list(
     'immediate_source_of_acquisition_note.accession_number',
 )
 RECORD_KEY_ALIASES['subject'] = 'subject_added_entry_topical_term'
-#TODO: References 999C5 $* [many subfields]
+# TODO: References 999C5 $* [many subfields]
 RECORD_KEY_ALIASES['division'] = _concat_fields_into_list(
     'added_entry_corporate_name.cern_work',
     'added_entry_corporate_name.institution_to_which_field_applies',
@@ -173,7 +168,7 @@ RECORD_KEY_ALIASES['year'] = _concat_fields_into_list(
 )
 RECORD_KEY_ALIASES['series'] = 'series_statement'
 RECORD_KEY_ALIASES['experiment'] = 'accelerator_experiment.experiment'
-RECORD_KEY_ALIASES['indicator'] = 'subject_indicator' #TODO: 697C_a
+RECORD_KEY_ALIASES['indicator'] = 'subject_indicator'  # TODO: 697C_a
 RECORD_KEY_ALIASES['accelerator'] = 'accelerator_experiment.accelerator'
 RECORD_KEY_ALIASES['sysno'] = 'sysno.sysno'
 RECORD_KEY_ALIASES['disp'] = 'status_week.display_period_for_books'
@@ -181,13 +176,19 @@ RECORD_KEY_ALIASES['sysnos'] = _concat_fields_into_list(
     'sysno.sysno',
     'system_control_number.system_control_number',
 )
-RECORD_KEY_ALIASES['collaboration'] = 'added_entry_corporate_name.miscellaneous_information'
+RECORD_KEY_ALIASES['collaboration'] = \
+        'added_entry_corporate_name.miscellaneous_information'
 RECORD_KEY_ALIASES['global_base'] = 'cata.library'
 RECORD_KEY_ALIASES['product'] = 'subject_indicator'
 RECORD_KEY_ALIASES['use'] = 'internal_note'
 RECORD_KEY_ALIASES['media'] = 'physical_medium.material_base_and_configuration'
 RECORD_KEY_ALIASES['restrictions'] = 'restrictions_on_access_note'
-RECORD_KEY_ALIASES['funding_project_number'] = 'funding_information_note.project_number'
+RECORD_KEY_ALIASES['funding_project_number'] = \
+        'funding_information_note.project_number'
+
+CFG_ACCESS_CONTROL_NOTIFY_USER_ABOUT_NEW_ACCOUNT = 0
+
+BLOCK_GOOGLE_TRANSLATE = False
 
 try:
     from cds.instance_config import *  # noqa

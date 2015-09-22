@@ -26,24 +26,91 @@
 @border-radius-base: 0px;
 @border-radius-large: 0px;
 @border-radius-small: 0px;
+
+// Break point
+@grid-float-breakpoint: @screen-desktop;
+
+// CDS font size
+@font-size-base: 16px;
+
+// CDS Colors
+@brand-primary: #2980b9;
+@navbar-default-bg: @brand-primary;
+@navbar-default-color: #fff;
+@navbar-default-link-color: @navbar-default-color;
+@navbar-default-link-active-color: #ffffff;
+
+@navbar-default-link-active-color: darken(@navbar-default-bg, 10%);
+@navbar-default-link-hover-color: darken(@navbar-default-bg, 15%);
+
+@cds-light-gray: lighten(@gray-light, 50%);
+@cds-gray: lighten(@gray-light, 40%);
+
 body {
-    font-family: 'PT Sans','Trebuchet MS', Tahoma, sans-serif;
-    color: #626262;
-    padding-top: 0; /* hot fix */
+  font-family: 'PT Sans','Trebuchet MS', Tahoma, sans-serif;
 }
 
-footer, footer p {
-    font-size: inherit; /* hot fix */
-}
+/* Navbar */
+.cds-nav-bar {
+  .icon-bar{
+    color: #fff!important;
+    background-color: #fff!important;
+  }
+  .cds-navbar-search {
+    .form-group{
+      width: 100%;
+    }
+    .cds-input-inner-icon{
+      margin-bottom: 0;
+      background-color: #fff;
+      width: 100%;
+      .cds-main-search-input{
+        border: 0!important;
+        font-weight: normal!important;
+        display: inline-block;
+        width: 60%;
+        outline: none!important;
+      }
 
-#footer {
-    height: auto; /* hot fix */
-}
+      .cds-main-search-icon {
+        z-index: 10;
+        padding: 10px 8px;
+        pointer-events: none;
+        color: @cds-gray;
+      }
 
-#wrap {
-    padding-bottom: 275px;
-    margin-bottom: -275px;
+      .cds-main-search-collection-label{
+        line-height: 22px;
+        font-size: 12px;
+        font-weight: normal;
+        color: #767676;
+        background-color: #EEE;
+        border-radius: 2px;
+        vertical-align: middle;
+        padding: 2px 5px;
+        .cds-remove-search-to-collection{
+          padding: 0 3px;
+        }
+      }
+    }
+  }
+  li.active a{
+    color: #fff!important;
+  }
+  .navbar-nav > .open > a:focus {
+    color: #fff!important;
+  }
 }
+/* Navbar */
+
+/* Footer */
+.cds-footer {
+  padding: 20px 0;
+  background-color: @cds-light-gray;
+  border-top: 1px solid @cds-gray;
+}
+/* Footer */
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -58,10 +125,6 @@ footer, footer p {
     height: auto; /* hot fix */
 }
 
-#body {
-    padding: 2em 0 4em;
-    border-top: 1px solid #eee;
-}
 
 #mainmenu {
     h1 {
@@ -98,37 +161,6 @@ footer, footer p {
     }
 }
 
-#footer {
-    .clearfix;
-
-    color: #666666;
-    background: none #EEEEEE;
-    font-size: 13px;
-    padding: 5em 0;
-
-    .langs {
-        text-align: right;
-    }
-}
-
-.pagefooter {
-    padding: 0 42px;
-    .pagefooterstripeleft {
-        float: left;
-        width: 35%;
-    }
-    .pagefooterstriperight {
-        float: right;
-        width: 60%;
-        text-align: right;
-    }
-    .cern-logo {
-        float:right;
-        margin: 0 0 32px 32px;
-        vertical-align: bottom;
-    }
-}
-
 /* ------------------------------------------------------------------------- */
 
 .navbar-form {
@@ -155,3 +187,61 @@ footer, footer p {
   overflow-y: auto;
 }
 
+.overlay-image {
+  .image {
+    position: relative;
+    width: 100%;
+  }
+
+  h2 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    width: 100%;
+  }
+}
+
+.brief-view-metadata{
+    a{
+        font-size: 12px;
+    }
+
+     li{
+        font-size: 12px;
+    }
+}
+
+.brief-view-by-author{
+    color:#7AA3CC;
+}
+
+.brief-view-inline-list li {
+    display:inline-block;
+    margin: 6px;
+}
+
+.brief-view-inline-list{
+    padding-left:0;
+    margin-left:0;
+}
+
+.brief-view-copyright{
+    color:#778899;
+    font-size: 12px;
+}
+
+.cds-margin-bottom-10 {
+    margin-bottom: 10px;
+}
+.cds-margin-top-20 {
+    margin-top: 20px;
+}
+
+.cds-margin-top-5 {
+    margin-top: 5px;
+}
+
+#translationAlert{
+    display: none;
+}

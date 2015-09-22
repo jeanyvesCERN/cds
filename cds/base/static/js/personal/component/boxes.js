@@ -40,12 +40,12 @@ define(function (require) {
 
     this._requestOptions = function(args) {
       return {
-          url: args.url,
-          type: args.method || 'GET',
-          cache: false,
-          data: JSON.stringify(args.data || {}),
-          contentType: "application/json; charset=utf-8",
-          dataType: 'json'
+        url: args.url,
+        type: args.method || 'GET',
+        cache: false,
+        data: JSON.stringify(args.data || {}),
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json'
       };
     };
 
@@ -96,12 +96,13 @@ define(function (require) {
       var sendingData = {}
       if (!isNew) {
         sendingData.index = id - 1;
-        sendingData.data = [data];
+        sendingData.data = that._prepareSettings();
       } else {
         delete box.dummy;
         that.attr.boxStorage.save(box);
         sendingData.data = that._prepareSettings();
       }
+      console.log('Sendingdata', sendingData);
       $.when(
         that._request({
           url: that.attr.api.boxes,

@@ -17,7 +17,7 @@
 # along with Invenio; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place, Suite 330, Boston, MA 02D111-1307, USA.
 
-"""Record list box."""
+"""Record issue box."""
 
 import itertools
 from flask import url_for
@@ -29,17 +29,17 @@ from .base import BoxBase
 
 
 @add_metaclass(BoxBase)
-class RecordListBox(object):
+class RecordIssueBox(object):
 
     """Build a box with the content of a search query."""
 
-    __display_name__ = 'Search'
+    __display_name__ = 'Issue'
 
-    __template__ = 'record_list'
+    __template__ = 'issue'
 
-    __boxname__ = 'record_list'
+    __boxname__ = 'issue'
 
-    limit = 5
+    limit = 1
     """Number of records to display in the box (max)."""
 
     def __init__(self, query, collection, title, **kwargs):
@@ -72,8 +72,10 @@ class RecordListBox(object):
             res['items'].append(
                 {'title': record.get('title_statement', {}).get('title', ''),
                  'link': url_for('record.metadata', recid=record.get('recid'),
-                                 _external=True, _scheme='https')}
+                                 _external=True, _scheme='https'),
+                 'cover': 'http://placehold.it/358x300'
+                 }
             )
         return res
 
-box = RecordListBox
+box = RecordIssueBox

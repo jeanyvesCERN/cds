@@ -1,13 +1,13 @@
 <div class="personal-box-body-normal" data-show="normal">
     <h4>{{header.title}}</h4>
-    <ul>
-        {{#items}}
-            <li><a href="{{link}}" title="{{title}}">{{title}}</a></li>
-        {{/items}}
-    </ul>
+    {{#items}}
+        <img width="100%" src="{{cover}}" alt="Photo cover" />
+        <br/><a href="{{link}}">{{title}}</a>
+        <br/>appears in album:<br/> <a href="{{album_link}}">{{album_title}}</a>
+    {{/items}}
     {{^items}}
     <div class="alert alert-warning">
-    No results. If this seems wrong, you may double check the box configuration.
+    No results. 
         </div>
     {{/items}}
     <a href="#" class="btn btn-block btn-link">{{footer.title}}</a>

@@ -17,7 +17,7 @@
 # along with Invenio; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place, Suite 330, Boston, MA 02D111-1307, USA.
 
-"""Record issue box."""
+"""Record Photo box."""
 
 import itertools
 from flask import url_for
@@ -29,15 +29,15 @@ from .base import BoxBase
 
 
 @add_metaclass(BoxBase)
-class RecordIssueBox(object):
+class PhotoBox(object):
 
     """Build a box with the content of a search query."""
 
-    __display_name__ = 'Issue'
+    __display_name__ = 'Photo'
 
-    __template__ = 'issue'
+    __template__ = 'photo'
 
-    __boxname__ = 'issue'
+    __boxname__ = 'photo'
 
     limit = 1 
     """Number of records to display in the box (max)."""
@@ -70,12 +70,19 @@ class RecordIssueBox(object):
         )
         for record in itertools.islice(result.records(), self.__class__.limit):
             res['items'].append(
-                {'title': record.get('title_statement', {}).get('title', ''),
-                 'link': url_for('record.metadata', recid=record.get('recid'),
-                                 _external=True, _scheme='https'),
-                 'cover': 'http://placehold.it/358x300'
+                {
+#                 'title': record.get('title_statement', {}).get('title', ''),
+                 'title': 'CERN-PHOTO-201509-187-9',
+#                 'link': url_for('record.metadata', recid=record.get('recid'),
+#                                 _external=True, _scheme='https'),
+                 'link': 'http://cds.cern.ch/record/2054533/files/MAX_8937.jpg?subformat=icon-1440',
+
+#                 'album_title': record.get('language_code', {}).get('language_code_of_text_sound_track_or_separate_title', ''),
+                 'album_title': 'Lunch with Gao Xingjian Nobel Prize winner for Literature',
+                 'album_link': 'https://cds.cern.ch/record/2054533',
+                 'cover': 'https://cds.cern.ch/record/2054533/files/MAX_8937.jpg?subformat=icon-180'
                  }
             )
         return res
 
-box = RecordIssueBox
+box = PhotoBox

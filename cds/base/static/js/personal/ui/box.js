@@ -59,6 +59,10 @@ define(function (require) {
           normal: require('hgn!./../templates/normal/record_list'),
           edit: require('hgn!./../templates/edit/record_list')
         },
+        photo: {
+          normal: require('hgn!./../templates/normal/photo'),
+          edit: require('hgn!./../templates/edit/photo')
+        },
         issue: {
           normal: require('hgn!./../templates/normal/issue'),
           edit: require('hgn!./../templates/edit/issue')

@@ -24,6 +24,7 @@ and docker-compose:
 .. code-block:: console
 
     # Install docker
+<<<<<<< HEAD
     sudo apt-get install curl
     curl -sSL https://get.docker.com/ | sh
 
@@ -35,6 +36,32 @@ and docker-compose:
 
     # Install docker-compose
     sudo pip install docker-compose
+=======
+    $ sudo apt-get install curl
+    $ curl -sSL https://get.docker.com/ | sh
+
+    # Use docker without sudo
+    $ sudo usermod -aG docker *your_user*
+
+    # Verify docker is installed correctly.
+    $ docker run hello-world
+
+    # Install docker-compose
+    $ sudo pip install docker-compose
+
+
+If the Docker container cant connect to the Internet you probably have to
+specify the dns server in the Docker config.
+
+As example (inside the CERN network):
+
+.. code-block:: console
+
+    $ cat /etc/default/docker
+
+    # Use DOCKER_OPTS to modify the daemon startup options.
+    DOCKER_OPTS="--dns 137.138.16.5 --dns 137.138.17.5 --dns 8.8.8.8 --dns 8.8.4.4"
+>>>>>>> f1e4d9adf375b408376a5c4e0f343936694f788c
 
 
 2.2 OS X prerequisites
@@ -100,26 +127,61 @@ To build the cdslabs image go to the cds source folder and execute:
 
 .. code-block:: console
 
+<<<<<<< HEAD
     docker-compose build
+=======
+    $ docker-compose build
+>>>>>>> f1e4d9adf375b408376a5c4e0f343936694f788c
 
 Run cdslabs with:
 
 .. code-block:: console
 
+<<<<<<< HEAD
     docker-compose up
+=======
+    $ docker-compose up
+
+The first time Docker will need some time to download all the images
+(elastisearch, mysql, redis).
+
+When the containers are running you can access the invenio Website under:
+http://127.0.0.1:28080 (The Port can be changed in the docker-compose.yml file)
+>>>>>>> f1e4d9adf375b408376a5c4e0f343936694f788c
 
 Load the demo records (Optinal):
 
 .. code-block:: console
 
+<<<<<<< HEAD
     docker-compose run --rm web inveniomanage records create -t marcxml < cds/demosite/data/cds-demobibdata.xml
 
+=======
+    $ docker-compose run --rm web inveniomanage records create -t marcxml < cds/demosite/data/cds-demobibdata.xml
+
+
+Access / explore the Docker container:
+
+.. code-block:: console
+
+    # Find the container name
+    $ docker ps
+    # Access the container
+    $ docker exec -it `CONTAINER NAME` bash
+
+Now you got a shell inside the container. Where you can run iPython and other
+things.
+>>>>>>> f1e4d9adf375b408376a5c4e0f343936694f788c
 
 Remove the containers:
 
 .. code-block:: console
 
+<<<<<<< HEAD
     docker-compose rm -v
+=======
+    $ docker-compose rm -v
+>>>>>>> f1e4d9adf375b408376a5c4e0f343936694f788c
 
 
 2.4 Develop
@@ -133,18 +195,60 @@ If other file are changed the container has to be recreated.
 
 .. code-block:: console
 
+<<<<<<< HEAD
     docker-compose build
     docker-compose up
+=======
+    $ docker-compose build
+    $ docker-compose up
+>>>>>>> f1e4d9adf375b408376a5c4e0f343936694f788c
 
 
 To everything including the database:
 
 .. code-block:: console
 
+<<<<<<< HEAD
     docker-compose rm -v
     docker-compose build
     docker-compose up
 
+
+3. Virtual enviroment
+-------------
+3.1 Prerequisites
+-----------------
+=======
+    $ docker-compose rm -v
+    $ docker-compose build
+    $ docker-compose up
+
+
+2.5 Docker Hints
+----------------
+>>>>>>> f1e4d9adf375b408376a5c4e0f343936694f788c
+
+ - Read https://docs.docker.com/articles/basics/
+
+ - Docker demon not running:
+
+    .. code-block:: console
+
+        $ docker run hello-world
+        Post http:///var/run/docker.sock/v1.20/containers/create: dial unix /var/run/docker.sock: no such file or directory.
+        * Are you trying to connect to a TLS-enabled daemon without TLS?
+        * Is your docker daemon up and running?
+            Make sure that docker is running
+
+
+   To fix this error you have to start you docker daemon
+
+ - Always remove container with the option `-v`! Otherwise the created volumes
+   wont be deleted and will fill up your disk.
+
+
+**GREAT! You finished the Docker installation, you don't have to read the
+Virtual environment chapter.**
 
 3. Virtual enviroment
 -------------
